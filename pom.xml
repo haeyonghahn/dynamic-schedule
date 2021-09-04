@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.springframework</groupId>
+	<artifactId>dynamic-schedule</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<!-- spring-boot-starter-parent : 
+	프로젝트에서 시작 부모를 선언했으면 의존성 태그 에서 선언하기 만하면 부모로부터 의존성을 가져올 수 있다 .
+	또한 의존성의 버전을 정의 할 필요가 없습니다. Maven은 부모 태그에서 시작 부모에 대해 정의 된 버전을 기반으로 jar 파일을 다운로드한다.
+	예시) 웹 프로젝트를 빌드하는 경우 spring-boot-starter-web을 직접 추가 할 수 있으며 버전을 지정할 필요가 없습니다.
+	-->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.5.RELEASE</version>
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
+		<!-- spring-boot-starter-web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- spring-boot-data-jpa -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<!-- spring-context-support :
+		애플리케이션 컨텍스트 컨테이너에서 사용되어지는데 자주 사용되지 않는 부가적인 
+		기능을 분리해 놓은 것이다.
+		예시) 캐시, 메일, 스케줄링, UI와 관련된 기능들이 포함되어 있다.
+		-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<!-- quartz -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- google-guava :
+		함수형 프로그래밍, 그래프, 캐시 처리, 레인지 오브젝트, 해싱 등 편리하고 
+		생산적인 기능을 제공하는 기타 유틸리티이다
+		 -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+		<!-- spring-boot-starter-velocity :
+		스프링 부트에서 View를 표시하는 의존성 라이브러리이다.
+		예시) JSP, Velocity, Thymeleaf
+		 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-velocity</artifactId>
+		</dependency>
+		<!-- spring-boot-starter-amqp :
+		Client와 동기방식으로 많은 데이터 통신을 하게 되면 병목현상이 생기게되고 서버의 성능이 저하된다. 
+		이런 현상을 막고자하여 또 하나의 미들웨어에 메시지를 위임하여 순차적으로 처리를 하는 것이다.
+		예시) RabbitMQ
+		 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<!-- H2 :
+		In-Memory DB
+		-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+</project>
