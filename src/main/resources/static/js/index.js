@@ -73,7 +73,7 @@ $(function() {
                 "jobGroup": $("#group_"+jobId).text()
             },
             success: function(res) {
-                if (res.valid) {
+                if (res) {
                 	alert("delete success!");
                 	location.reload();
                 } else {

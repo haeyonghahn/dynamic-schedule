@@ -120,6 +120,16 @@ public class ScheduleJobService {
         scheduler.scheduleJob(jobDetail, trigger);  
 	}
 	
+	public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException{  
+    	checkNotNull(scheduleJob);
+    	/*
+    	 * jobKey :
+    	 * job_group_odd.job_name_1
+    	 * */
+        JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
+        scheduler.deleteJob(jobKey);  
+    }
+	
 	private void checkNotNull(ScheduleJob scheduleJob) {
     	Preconditions.checkNotNull(scheduleJob, "job is null");
 		Preconditions.checkNotNull(StringUtils.isEmpty(scheduleJob.getJobName()), "jobName is null");

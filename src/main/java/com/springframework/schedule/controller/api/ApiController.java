@@ -40,4 +40,17 @@ public class ApiController {
 		}
 		return flag;
 	}
+	
+	@RequestMapping(value = "/deleteJob", method = {RequestMethod.GET, RequestMethod.POST})
+	public Object deleteJob(ScheduleJob job){
+		boolean flag = true;
+		logger.info("params, job = {}", job);
+		try {
+			scheduleJobService.deleteJob(job);
+		} catch (Exception e) {
+			flag = false;
+			logger.error("deleteJob ex:", e);
+		}
+		return flag;
+	}
 }

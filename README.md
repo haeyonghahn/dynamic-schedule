@@ -40,4 +40,7 @@ Quartz의 여러 인스턴스가 동일한 데이터베이스 테이블 세트�
 
 `org.quartz.jobStore.clusterCheckinInterval=20000`    
 이 인스턴스가 클러스터의 다른 인스턴스에 "체크인"*하는 빈도(밀리초)를 설정합니다.    
-실패한 인스턴스를 감지하는 속도에 영향을 줍니다.     
+실패한 인스턴스를 감지하는 속도에 영향을 줍니다.  
+
+## Cron Expression
+![](../resources/static/images/cronExpression.PNG)
