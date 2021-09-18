@@ -43,4 +43,4 @@ Quartz의 여러 인스턴스가 동일한 데이터베이스 테이블 세트�
 실패한 인스턴스를 감지하는 속도에 영향을 줍니다.  
 
 ## Cron Expression
-![](../resources/static/images/cronExpression.PNG)
+![cronExpression](https://github.com/haeyonghahn/dynamic-schedule/blob/master/src/main/resources/static/images/cronExpression.PNG)
