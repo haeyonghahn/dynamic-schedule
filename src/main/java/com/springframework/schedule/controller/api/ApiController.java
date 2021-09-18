@@ -53,4 +53,43 @@ public class ApiController {
 		}
 		return flag;
 	}
+	
+	@RequestMapping(value = "/resumeJob", method = {RequestMethod.GET, RequestMethod.POST})
+	public Object resumeJob(ScheduleJob job){
+		boolean flag = true;
+		logger.info("params, job = {}", job);
+		try {
+			scheduleJobService.resumeJob(job);
+		} catch (Exception e) {
+			flag = false;
+			logger.error("resumeJob ex:", e);
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value = "/pauseJob", method = {RequestMethod.GET, RequestMethod.POST})
+	public Object pauseJob(ScheduleJob job){
+		boolean flag = true;
+		logger.info("params, job = {}", job);
+		try {
+			scheduleJobService.pauseJob(job);
+		} catch (Exception e) {
+			flag = false;
+			logger.error("pauseJob ex:", e);
+		}
+		return flag;
+	}
+	
+	@RequestMapping(value = "/runJob", method = {RequestMethod.GET, RequestMethod.POST})
+	public Object runJob(ScheduleJob job){
+		boolean flag = true;
+		logger.info("params, job = {}", job);
+		try {
+			scheduleJobService.runJobOnce(job);
+		} catch (Exception e) {
+			flag = false;
+			logger.error("runJob ex:", e);
+		}
+		return flag;
+	}
 }

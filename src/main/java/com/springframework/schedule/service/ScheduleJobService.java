@@ -93,7 +93,7 @@ public class ScheduleJobService {
 		}
 		// Edit job
 		else {
-			
+			updateJobCronExpression(scheduleJob);
 		}
 	}
 	
@@ -120,6 +120,18 @@ public class ScheduleJobService {
         scheduler.scheduleJob(jobDetail, trigger);  
 	}
 	
+	private void updateJobCronExpression(ScheduleJob scheduleJob) throws SchedulerException{  
+		checkNotNull(scheduleJob);
+		Preconditions.checkNotNull(StringUtils.isEmpty(scheduleJob.getCronExpression()), "CronExpression is null");
+		
+        TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
+        CronTrigger cronTrigger = (CronTrigger)scheduler.getTrigger(triggerKey);  
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.getCronExpression());  
+        cronTrigger = cronTrigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();  
+        
+        scheduler.rescheduleJob(triggerKey, cronTrigger);  
+    }
+	
 	public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException{  
     	checkNotNull(scheduleJob);
     	/*
@@ -129,6 +141,24 @@ public class ScheduleJobService {
         JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
         scheduler.deleteJob(jobKey);  
     }
+	
+	public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException{  
+    	checkNotNull(scheduleJob);
+    	JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
+        scheduler.resumeJob(jobKey);  
+    }
+	
+	public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException{  
+    	checkNotNull(scheduleJob);
+        JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
+        scheduler.pauseJob(jobKey);  
+    }  
+	
+	public void runJobOnce(ScheduleJob scheduleJob) throws SchedulerException{ 
+    	checkNotNull(scheduleJob);
+        JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());  
+        scheduler.triggerJob(jobKey);  
+    } 
 	
 	private void checkNotNull(ScheduleJob scheduleJob) {
     	Preconditions.checkNotNull(scheduleJob, "job is null");

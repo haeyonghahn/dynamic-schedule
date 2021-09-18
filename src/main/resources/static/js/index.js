@@ -11,7 +11,7 @@ $(function() {
                 "jobGroup": $("#group_"+jobId).text()
             },
             success: function(res) {
-                if (res.valid) {
+                if (res) {
                 	alert("run success!");  
                 } else {
                 	alert(res.msg); 
@@ -31,7 +31,7 @@ $(function() {
                 "jobGroup": $("#group_"+jobId).text()
             },
             success: function(res) {
-                if (res.valid) {
+                if (res) {
                 	alert("pause success!");
                 	location.reload();
                 } else {
@@ -52,7 +52,7 @@ $(function() {
                 "jobGroup": $("#group_"+jobId).text()
             },
             success: function(res) {
-                if (res.valid) {
+                if (res) {
                 	alert("resume success!");
                 	location.reload();
                 } else {
