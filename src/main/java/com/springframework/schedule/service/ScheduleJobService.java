@@ -4,16 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import com.google.common.base.Preconditions;
+import com.springframework.schedule.job.QuartzJobFactory;
 import com.springframework.schedule.models.ScheduleJob;
 
 @Service
@@ -77,4 +84,45 @@ public class ScheduleJobService {
             e.printStackTrace(); 
         }  
     }
+	
+	public void saveOrupdate(ScheduleJob scheduleJob) throws Exception {
+		Preconditions.checkNotNull(scheduleJob, "job is null");
+		// Create job
+		if(StringUtils.isEmpty(scheduleJob.getJobId())) {
+			addJob(scheduleJob);
+		}
+		// Edit job
+		else {
+			
+		}
+	}
+	
+	private void addJob(ScheduleJob scheduleJob) throws Exception {
+		checkNotNull(scheduleJob);
+		Preconditions.checkNotNull(StringUtils.isEmpty(scheduleJob.getCronExpression()), "CronExpression is null");
+		
+		TriggerKey triggerKey = TriggerKey.triggerKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
+		CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+		if(trigger != null){  
+            throw new Exception("job already exists!");  
+        }
+        
+        // simulate job info db persist operation
+        scheduleJob.setJobId(String.valueOf(QuartzJobFactory.jobList.size() + 1));
+        QuartzJobFactory.jobList.add(scheduleJob);
+        
+        JobDetail jobDetail = JobBuilder.newJob(QuartzJobFactory.class).withIdentity(scheduleJob.getJobName(), scheduleJob.getJobGroup()).build();  
+        jobDetail.getJobDataMap().put("scheduleJob", scheduleJob);  
+  
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.getCronExpression());  
+        trigger = TriggerBuilder.newTrigger().withIdentity(scheduleJob.getJobName(), scheduleJob.getJobGroup()).withSchedule(cronScheduleBuilder).build();  
+  
+        scheduler.scheduleJob(jobDetail, trigger);  
+	}
+	
+	private void checkNotNull(ScheduleJob scheduleJob) {
+    	Preconditions.checkNotNull(scheduleJob, "job is null");
+		Preconditions.checkNotNull(StringUtils.isEmpty(scheduleJob.getJobName()), "jobName is null");
+		Preconditions.checkNotNull(StringUtils.isEmpty(scheduleJob.getJobGroup()), "jobGroup is null");
+	}
 }

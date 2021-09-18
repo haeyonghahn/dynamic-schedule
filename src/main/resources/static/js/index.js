@@ -109,7 +109,7 @@ $(function() {
 	            type: "POST",
 	            data:  $('#mainForm').serialize(),
 	            success: function(res) {
-	            	if (res.valid) {
+	            	if (res) {
 	                	alert("success!");
 	                	location.reload();
 	                } else {
